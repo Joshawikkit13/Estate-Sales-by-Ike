@@ -165,11 +165,12 @@
       .poster-frame{ padding: 12px; }
     }
 
-    /* ===== Subscribe section stays centered on wide screens ===== */
+        /* Subscribe section: centered, fluid, ~2/3 width */
     #subscribe{
-      max-width: 720px;
+      width: min(66vw, 900px); /* 2/3 of viewport, capped */
       margin: 0 auto;
     }
+
 
     /* ===== Form ===== */
     form{display:grid;gap:10px;margin-top:10px;position:relative;z-index:1}
