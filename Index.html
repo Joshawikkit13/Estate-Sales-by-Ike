@@ -309,65 +309,88 @@
     </footer>
   </div>
 
-  <script>
-    const FB_PAGE_URL = "https://www.facebook.com/estatesalesbyike";
-    const FB_HEIGHT = 860;
+<script>
+  const FB_PAGE_URL = "https://www.facebook.com/estatesalesbyike";
+  const FB_HEIGHT = 900; // make it feel more “centerpiece”
 
-    const frame = document.getElementById("fbFrame");
-    const mount = document.getElementById("fbMount");
-    const statusEl = document.getElementById("fbStatus") || { textContent: "" };
-    const fitBtn = document.getElementById("fitFb");
+  const frame = document.getElementById("fbFrame");
+  const mount = document.getElementById("fbMount");
+  const statusEl = document.getElementById("fbStatus") || { textContent: "" };
+  const fitBtn = document.getElementById("fitFb");
 
-    function buildMarkup(){
-      return `
-        <div class="fb-page"
-             data-href="${FB_PAGE_URL}"
-             data-tabs="timeline"
-             data-height="${FB_HEIGHT}"
-             data-small-header="false"
-             data-adapt-container-width="true"
-             data-hide-cover="false"
-             data-show-facepile="true">
-          <blockquote cite="${FB_PAGE_URL}" class="fb-xfbml-parse-ignore">
-            <a href="${FB_PAGE_URL}">Estate Sales by Ike</a>
-          </blockquote>
-        </div>
-      `;
+  function measuredWidth(){
+    const rect = frame.getBoundingClientRect();
+    // poster-frame padding: 18px * 2 = 36; subtract a bit extra for safety
+    const w = Math.floor(rect.width - 44);
+    // FB plugin behaves best in a realistic range
+    return Math.max(380, Math.min(1200, w));
+  }
+
+  function buildMarkup(width){
+    return `
+      <div class="fb-page"
+           data-href="${FB_PAGE_URL}"
+           data-tabs="timeline"
+           data-width="${width}"
+           data-height="${FB_HEIGHT}"
+           data-small-header="false"
+           data-adapt-container-width="false"
+           data-hide-cover="false"
+           data-show-facepile="true">
+        <blockquote cite="${FB_PAGE_URL}" class="fb-xfbml-parse-ignore">
+          <a href="${FB_PAGE_URL}">Estate Sales by Ike</a>
+        </blockquote>
+      </div>
+    `;
+  }
+
+  function renderFacebook(){
+    const w = measuredWidth();
+    statusEl.textContent = `Rendering at ${w}px…`;
+
+    // Force a fresh render every time so FB respects width changes
+    mount.innerHTML = buildMarkup(w);
+
+    if (window.FB && FB.XFBML && FB.XFBML.parse) {
+      FB.XFBML.parse(mount);
+      statusEl.textContent = `Loaded at ${w}px`;
+    } else {
+      statusEl.textContent = "Waiting for Facebook…";
+      setTimeout(() => {
+        if (window.FB && FB.XFBML && FB.XFBML.parse) {
+          FB.XFBML.parse(mount);
+          statusEl.textContent = `Loaded at ${w}px`;
+        } else {
+          statusEl.textContent = "Facebook blocked/unavailable";
+        }
+      }, 700);
     }
+  }
 
-    function renderFacebook(){
-      statusEl.textContent = "Rendering…";
-      mount.innerHTML = buildMarkup();
+  window.addEventListener("load", () => {
+    renderFacebook();
+    // fonts/layout settle
+    setTimeout(renderFacebook, 900);
+  });
 
-      if (window.FB && FB.XFBML && FB.XFBML.parse) {
-        FB.XFBML.parse(mount);
-        statusEl.textContent = "Loaded";
-      } else {
-        statusEl.textContent = "Waiting for Facebook…";
-        setTimeout(() => {
-          if (window.FB && FB.XFBML && FB.XFBML.parse) {
-            FB.XFBML.parse(mount);
-            statusEl.textContent = "Loaded";
-          } else {
-            statusEl.textContent = "Facebook blocked/unavailable";
-          }
-        }, 700);
-      }
-    }
-
-    window.addEventListener("load", () => {
-      renderFacebook();
-      setTimeout(renderFacebook, 900);
+  // Button: re-render to current width
+  if (fitBtn) {
+    fitBtn.addEventListener("click", () => {
+      mount.innerHTML = "";
+      setTimeout(renderFacebook, 50);
     });
+  }
 
-    if (fitBtn) {
-      fitBtn.addEventListener("click", () => {
-        mount.innerHTML = "";
-        setTimeout(renderFacebook, 50);
-      });
-    }
-  </script>
+  // OPTIONAL (but nice): re-fit when the browser is resized
+  window.addEventListener("resize", () => {
+    // simple debounce
+    clearTimeout(window.__fbResizeTimer);
+    window.__fbResizeTimer = setTimeout(renderFacebook, 250);
+  });
+</script>
+
 </body>
 </html>
+
 
 
