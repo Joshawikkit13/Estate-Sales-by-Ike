@@ -217,31 +217,23 @@
     }
     /* === Final Facebook centering + frame hug fix === */
 
-  /* Center everything inside the poster frame */
-  #fbFrame{
-    display: flex;
-    justify-content: center;
-  }
-  
-  /* Let the inner mount size itself to the FB iframe */
-  #fbMount{
-    display: inline-flex;
-    justify-content: center;
-  }
-  
-  /* Make the frame hug the actual FB plugin width */
-  #fbFrame{
-    max-width: fit-content;
-    margin: 0 auto;
-  }
-  
-  /* Force FB wrappers + iframe to stay at their natural width */
-  #fbFrame .fb-page,
-  #fbFrame .fb-page > span,
-  #fbFrame .fb-page iframe{
-    margin: 0 auto !important;
-    display: block !important;
-  }
+      /* === Stable center Facebook feed inside the frame === */
+    #fbFrame{
+      max-width: 720px;   /* frame size (adjust if you want) */
+      margin: 0 auto;     /* center the frame itself */
+    }
+    
+    #fbMount{
+      display: flex;
+      justify-content: center; /* center the FB plugin */
+    }
+    
+    /* Keep FB wrappers from shrinking oddly */
+    #fbFrame .fb-page,
+    #fbFrame .fb-page > span{
+      display: block !important;
+    }
+
 
 
 
@@ -355,7 +347,7 @@
     // poster-frame padding: 18px * 2 = 36; subtract a bit extra for safety
     const w = Math.floor(rect.width - 44);
     // FB plugin behaves best in a realistic range
-    return Math.max(380, Math.min(1200, w));
+    return Math.max(500, Math.min(1200, w));
   }
 
   function buildMarkup(width){
@@ -423,6 +415,7 @@
 
 </body>
 </html>
+
 
 
 
