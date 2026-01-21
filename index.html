@@ -372,65 +372,63 @@
       opacity:.9;
     }
     
-    /* ===== ART DECO ZIG-ZAG DIVIDERS ===== */
+/* ===== CLEAN DECO DIVIDER: thin double rule + small center ornament ===== */
+.divider{
+  position:relative;
+  height:10px;
+  margin:14px 0 14px;
+  background:transparent;
+}
 
-    .divider{
-      height:16px;
-      margin:18px auto 16px;
-      position:relative;
-      background:transparent;
-    }
-    
-    /* Main stepped zig-zag line */
-    .divider::before{
-      content:"";
-      display:block;
-      height:100%;
-      background:
-        linear-gradient(
-          90deg,
-          rgba(75,35,90,0) 0%,
-          rgba(75,35,90,.35) 12%,
-          rgba(214,178,94,.85) 32%,
-          rgba(15,106,116,.75) 50%,
-          rgba(214,178,94,.85) 68%,
-          rgba(75,35,90,.35) 88%,
-          rgba(75,35,90,0) 100%
-        );
-    
-      /* Zig-zag mask */
-      -webkit-mask:
-        repeating-linear-gradient(
-          90deg,
-          #000 0 18px,
-          transparent 18px 26px
-        );
-      mask:
-        repeating-linear-gradient(
-          90deg,
-          #000 0 18px,
-          transparent 18px 26px
-        );
-    
-      border-radius:12px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.6),
-        0 4px 10px rgba(0,0,0,.25);
-    }
-    
-    /* Center diamond accent */
-    .divider::after{
-      content:"◆";
-      position:absolute;
-      top:-3px;
-      left:50%;
-      transform:translateX(-50%);
-      font-size:18px;
-      color: rgba(214,178,94,.95);
-      text-shadow:
-        0 1px 0 rgba(255,255,255,.6),
-        0 3px 6px rgba(0,0,0,.35);
-    }
+/* two thin rules */
+.divider::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:50%;
+  transform:translateY(-50%);
+  height:6px;
+  background:
+    linear-gradient(to bottom,
+      rgba(21,17,13,.35) 0 1px,     /* top line */
+      transparent 1px 4px,
+      rgba(21,17,13,.35) 4px 5px,   /* bottom line */
+      transparent 5px 6px
+    );
+}
+
+/* small center ornament (not scrunched) */
+.divider::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:58px;
+  height:10px;
+  border-radius:999px;
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(214,178,94,.95) 0 2px,
+      transparent 3px
+    );
+  box-shadow:
+    inset 0 0 0 1px rgba(21,17,13,.25);
+  opacity:.95;
+}
+/* Slightly more architectural border treatment */
+header, section, footer{
+  box-shadow: 0 14px 38px rgba(0,0,0,.18);
+}
+
+header::before, section::before, footer::before{
+  border: 1px solid rgba(21,17,13,.18); /* solid instead of dashed */
+  opacity:.9;
+}
+
+
+
 
   </style>
 </head>
@@ -643,4 +641,3 @@
 
 </body>
 </html>
-
