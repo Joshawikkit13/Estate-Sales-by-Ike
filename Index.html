@@ -233,6 +233,22 @@
     #fbFrame .fb-page > span{
       display: block !important;
     }
+    /* Prevent horizontal scroll on small screens */
+    #fbFrame{
+      overflow: hidden;
+    }
+    
+    @media (max-width: 520px){
+      .poster-frame{
+        padding: 12px; /* slightly smaller padding so the plugin fits */
+      }
+    }
+        #fbFrame{
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+
 
 
 
@@ -343,12 +359,16 @@
   const fitBtn = document.getElementById("fitFb");
 
   function measuredWidth(){
-    const rect = frame.getBoundingClientRect();
-    // poster-frame padding: 18px * 2 = 36; subtract a bit extra for safety
-    const w = Math.floor(rect.width - 44);
-    // FB plugin behaves best in a realistic range
-    return Math.max(500, Math.min(1200, w));
+  const rect = frame.getBoundingClientRect();
+  const w = Math.floor(rect.width - 44);
+
+  // If the container is narrow (mobile), don't force a 500px minimum.
+  // If it's wider (desktop/tablet), keep a comfortable minimum.
+  const min = (rect.width < 560) ? 320 : 500;
+
+  return Math.max(min, Math.min(1200, w));
   }
+
 
   function buildMarkup(width){
     return `
@@ -415,6 +435,7 @@
 
 </body>
 </html>
+
 
 
 
