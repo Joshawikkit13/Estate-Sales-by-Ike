@@ -173,10 +173,12 @@ h2{
   justify-content:center;
 }
 #fbIframe{
-  width:min(500px,100%);
-  height:900px;
+  width: 500px;
+  max-width: 100%;
+  height: 900px;
   border:none;
 }
+
 
 /* Subscribe */
 #subscribe{
@@ -222,18 +224,6 @@ footer{text-align:center;margin-top:18px}
 }
 .contactText .label{font-size:12px;text-transform:uppercase;opacity:.78}
 .contactText .value{font-size:20px;font-weight:600}
-  /* Shrink-wrap the FB frame to the feed width */
-.fbFrameWrap{
-  width: fit-content;
-  max-width: 100%;
-  margin: 0 auto;           /* center it */
-}
-
-/* Ensure the poster frame itself doesn't stretch full-width */
-#fbFrame{
-  display: inline-block;
-}
-
 </style>
 </head>
 
@@ -252,14 +242,11 @@ footer{text-align:center;margin-top:18px}
   <h2>Latest on Facebook</h2>
   <div class="divider"></div>
 
-  <div class="fbFrameWrap">
   <div class="poster-frame" id="fbFrame">
     <div class="fb-embed">
       <iframe id="fbIframe" loading="lazy"></iframe>
     </div>
   </div>
-</div>
-
 </section>
 
 <section id="subscribe">
