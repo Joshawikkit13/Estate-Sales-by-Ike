@@ -13,10 +13,10 @@
     :root{
       --paper:#f3ead7;
       --ink:#1f1b16;
-      --maroon:#7a2e2e;
-      --gold:#b08a3a;
       --border:rgba(31,27,22,.25);
       --shadow:rgba(0,0,0,.18);
+      --maroon:#7a2e2e;
+      --gold:#b08a3a;
     }
 
     *{box-sizing:border-box}
@@ -49,6 +49,14 @@
       position:relative;
       overflow:hidden;
       text-align:center;
+
+      /* subtle success animation */
+      transform: translateY(10px) scale(.985);
+      opacity: 0;
+      animation: popIn .55s ease-out forwards;
+    }
+    @keyframes popIn{
+      to { transform: translateY(0) scale(1); opacity: 1; }
     }
     .card::before{
       content:"";
@@ -83,6 +91,12 @@
       font-size:18px;
       position:relative;
       z-index:1;
+    }
+
+    .subtle{
+      font-size:15px;
+      opacity:.85;
+      margin-top:10px;
     }
 
     .actions{
@@ -120,16 +134,33 @@
     <h1>Thanks for subscribing!</h1>
 
     <p>
-      You’re on the list. Sale details and photo galleries are posted on Facebook.
-      We’ll send reminders so you don’t miss the next sale.
+      You’re on the list. We’ll send reminders so you don’t miss the next sale.
+    </p>
+
+    <p class="subtle">
+      Redirecting to the home page in <span id="countdown">6</span> seconds…
     </p>
 
     <div class="actions">
-      <a class="btn primary" href="./">Back to home</a>
-      <a class="btn" href="https://www.facebook.com/estatesalesbyike" target="_blank" rel="noopener">
-        facebook.com/estatesalesbyike
-      </a>
+    <a class="btn primary" href="https://joshawikkit13.github.io/Estate-Sales-by-Ike/">Back to home now</a>
     </div>
   </main>
+
+  <script>
+    (function(){
+      let s = 6;
+      const el = document.getElementById("countdown");
+      const tick = () => {
+        s -= 1;
+        if (el) el.textContent = String(s);
+        if (s <= 0) {
+          window.location.href = "./";
+          return;
+        }
+        setTimeout(tick, 1000);
+      };
+      setTimeout(tick, 1000);
+    })();
+  </script>
 </body>
 </html>
