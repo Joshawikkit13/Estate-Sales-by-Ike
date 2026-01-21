@@ -217,36 +217,34 @@
     }
     /* === Final Facebook centering + frame hug fix === */
 
-      /* === Stable center Facebook feed inside the frame === */
-    #fbFrame{
-      max-width: 640px;   /* frame size (adjust if you want) */
-      margin: 0 auto;     /* center the frame itself */
-    }
-    
+    /* === Facebook: hard center + no overflow on phones === */
     #fbMount{
-      display: flex;
-      justify-content: center; /* center the FB plugin */
+      display:flex;
+      justify-content:center;
+      width:100%;
     }
     
-    /* Keep FB wrappers from shrinking oddly */
     #fbFrame .fb-page,
     #fbFrame .fb-page > span{
-      display: block !important;
-    }
-    /* Prevent horizontal scroll on small screens */
-    #fbFrame{
-      overflow: hidden;
+      display:block !important;
+      margin: 0 auto !important;
     }
     
+    /* Facebook injects an iframe with inline width; force it to stay inside */
+    #fbFrame iframe{
+      max-width:100% !important;
+    }
+    
+    /* Prevent any horizontal scrolling from the FB iframe */
+    #fbFrame{
+      overflow:hidden;
+    }
+    
+    /* On small screens, reduce padding so the FB plugin fits comfortably */
     @media (max-width: 520px){
-      .poster-frame{
-        padding: 12px; /* slightly smaller padding so the plugin fits */
-      }
+      .poster-frame{ padding: 12px; }
     }
-        #fbFrame{
-      max-width: 640px;
-      margin: 0 auto;
-    }
+
 
 
 
@@ -360,14 +358,21 @@
 
   function measuredWidth(){
   const rect = frame.getBoundingClientRect();
-  const w = Math.floor(rect.width - 44);
 
-  // If the container is narrow (mobile), don't force a 500px minimum.
-  // If it's wider (desktop/tablet), keep a comfortable minimum.
-  const min = (rect.width < 560) ? 320 : 500;
+  // Available inner width of the poster frame:
+  // padding 18*2 = 36, plus a bit for borders/safety
+  let w = Math.floor(rect.width - 44);
 
-  return Math.max(min, Math.min(1200, w));
-  }
+  // Never ask Facebook to render wider than its practical max
+  w = Math.min(500, w);
+
+  // Don't force a minimum bigger than what the phone can display
+  // (prevents overflow on small screens)
+  w = Math.max(260, w); // 260 is safe and still readable
+
+  return w;
+}
+
 
 
   function buildMarkup(width){
@@ -435,6 +440,7 @@
 
 </body>
 </html>
+
 
 
 
