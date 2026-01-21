@@ -314,15 +314,15 @@
         <form action="https://api.staticforms.xyz/submit" method="POST">
           <input type="hidden" name="accessKey" value="sf_7lm8c7hh0bdeef14mea3lc8h">
           <input type="hidden" name="subject" value="New Sale Alert Signup">
-          <input type="hidden" name="redirectTo" value="https://jcrow.github.io/Estate-Sales-by-Ike/thanks.html">
+          <input type="hidden" name="redirectTo" value="https://joshawikkit13.github.io/Estate-Sales-by-Ike/thanks.html">
 
           <div class="row2">
             <div>
               <label for="email">Email</label>
-              <input id="email" name="email" type="email" required placeholder="you@example.com">
+              <input id="email" name="email" type="email" placeholder="you@example.com">
             </div>
             <div>
-              <label for="phone">Phone (optional)</label>
+              <label for="phone">Phone </label>
               <input id="phone" name="phone" type="tel" placeholder="918-319-4853">
             </div>
           </div>
@@ -336,7 +336,10 @@
             <input type="checkbox" name="sms_opt_in" value="yes" style="width:auto;max-width:none;margin-top:3px">
             <span>Allow text reminders (Msg &amp; data rates may apply)</span>
           </label>
-
+            <p id="formError" style="display:none;margin:8px 0 0;font-size:14px;font-weight:600;">
+            Please enter an email or a phone number.
+          </p>
+          
           <button type="submit">Subscribe</button>
         </form>
       </section>
@@ -426,6 +429,47 @@
       window.__fbResizeTimer = setTimeout(renderFacebook, 250);
     });
   </script>
+  <script>
+  (function(){
+    const form = document.querySelector('form[action="https://api.staticforms.xyz/submit"]');
+    if(!form) return;
+
+    const email = document.getElementById("email");
+    const phone = document.getElementById("phone");
+    const err = document.getElementById("formError");
+
+    function showError(msg){
+      err.textContent = msg;
+      err.style.display = "block";
+      err.style.color = "#7a2e2e";
+    }
+    function hideError(){
+      err.style.display = "none";
+    }
+
+    form.addEventListener("submit", (e) => {
+      const emailVal = (email?.value || "").trim();
+      const phoneVal = (phone?.value || "").trim();
+
+      // Require at least one of them
+      if(!emailVal && !phoneVal){
+        e.preventDefault();
+        showError("Please enter an email or a phone number.");
+        (email || phone)?.focus?.();
+        return;
+      }
+
+      // If they typed something, clear the error
+      hideError();
+    });
+
+    // Clear error as soon as they start typing
+    email?.addEventListener("input", hideError);
+    phone?.addEventListener("input", hideError);
+      })();
+    </script>
+
 </body>
 </html>
+
 
