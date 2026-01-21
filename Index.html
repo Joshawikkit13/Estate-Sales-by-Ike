@@ -217,32 +217,38 @@
     }
     /* === Final Facebook centering + frame hug fix === */
 
-    /* === Facebook: hard center + no overflow on phones === */
-    #fbMount{
-      display:flex;
-      justify-content:center;
-      width:100%;
+    /* Frame hugs the 500px plugin (plus your inner padding/border) */
+    #fbFrame {
+      max-width: 540px;  /* 500 + a little breathing room */
+      margin: 0 auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
     }
     
+    /* Center the actual Facebook output */
+    #fbMount {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    
+    /* FB wrapper elements sometimes default to left alignment */
     #fbFrame .fb-page,
-    #fbFrame .fb-page > span{
-      display:block !important;
-      margin: 0 auto !important;
+    #fbFrame .fb-page > span {
+      display: block !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
     }
     
-    /* Facebook injects an iframe with inline width; force it to stay inside */
-    #fbFrame iframe{
-      max-width:100% !important;
-    }
-    
-    /* Prevent any horizontal scrolling from the FB iframe */
-    #fbFrame{
-      overflow:hidden;
-    }
-    
-    /* On small screens, reduce padding so the FB plugin fits comfortably */
-    @media (max-width: 520px){
-      .poster-frame{ padding: 12px; }
+    /* The iframe itself is the thing with inline width */
+    #fbFrame .fb-page iframe,
+    #fbFrame .fb-page > span > iframe {
+      display: block !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
     }
 
 
@@ -440,6 +446,7 @@
 
 </body>
 </html>
+
 
 
 
