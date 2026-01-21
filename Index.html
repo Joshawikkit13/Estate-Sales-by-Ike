@@ -56,6 +56,10 @@
       pointer-events:none;
     }
 
+    header{ text-align:center; }
+    .tagline{ margin-left:auto; margin-right:auto; }
+
+
     .kicker{
       font-family:"Special Elite",serif;
       text-transform:uppercase;
@@ -250,6 +254,25 @@
       margin-left: auto !important;
       margin-right: auto !important;
     }
+    footer .links{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      font-size:20px;
+      line-height:1.25;
+    }
+    
+    footer .links a{
+      border-bottom:none;
+      padding:10px 12px;
+      border:2px solid rgba(31,27,22,.25);
+      border-radius:12px;
+      background:rgba(255,255,255,.60);
+      box-shadow:0 10px 18px rgba(0,0,0,.12);
+      width:fit-content;
+      max-width:100%;
+    }
+
 
 
 
@@ -285,11 +308,6 @@
       <section>
         <h2>Latest on Facebook</h2>
         <div class="divider"></div>
-
-        <div class="toolsRow">
-          <button class="tinyBtn" type="button" id="fitFb">Reload Facebook feed</button>
-          <span class="status" id="fbStatus">Ready</span>
-        </div>
 
         <div class="poster-frame" id="fbFrame">
           <div id="fbMount"></div>
@@ -348,7 +366,7 @@
       <div class="links">
         <a href="mailto:estatesalesbyike@gmail.com">estatesalesbyike@gmail.com</a>
         <a href="tel:+19183194853">918-319-4853</a>
-        <a href="https://www.facebook.com/estatesalesbyike" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.facebook.com/estatesalesbyike" target="_blank" rel="noopener">estatesalesbyike</a>
       </div>
     </footer>
   </div>
@@ -359,8 +377,8 @@
 
   const frame = document.getElementById("fbFrame");
   const mount = document.getElementById("fbMount");
-  const statusEl = document.getElementById("fbStatus") || { textContent: "" };
-  const fitBtn = document.getElementById("fitFb");
+  //const statusEl = document.getElementById("fbStatus") || { textContent: "" };
+  //const fitBtn = document.getElementById("fitFb");
 
   function measuredWidth(){
   const rect = frame.getBoundingClientRect();
@@ -428,14 +446,6 @@
     setTimeout(renderFacebook, 900);
   });
 
-  // Button: re-render to current width
-  if (fitBtn) {
-    fitBtn.addEventListener("click", () => {
-      mount.innerHTML = "";
-      setTimeout(renderFacebook, 50);
-    });
-  }
-
   // OPTIONAL (but nice): re-fit when the browser is resized
   window.addEventListener("resize", () => {
     // simple debounce
@@ -446,6 +456,7 @@
 
 </body>
 </html>
+
 
 
 
