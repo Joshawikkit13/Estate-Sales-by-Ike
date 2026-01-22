@@ -166,18 +166,35 @@ h2{
 
 .poster-frame>*{position:relative;z-index:2}
 
-/* Facebook iframe */
-.fb-embed{
-  width:100%;
+/* ===== Facebook: make frame shrink to feed width ===== */
+#fbWrap{
   display:flex;
   justify-content:center;
 }
-#fbIframe{
-  width: 500px;
-  max-width: 100%;
-  height: 900px;
-  border:none;
+
+/* This is the key: the frame can shrink because it's inline-block */
+#fbFrame{
+  display:inline-block;
+  width:auto;
+  max-width:100%;
 }
+
+/* IMPORTANT: remove width:100% so it doesn't force full width */
+.fb-embed{
+  display:inline-flex;
+  width:auto;
+  justify-content:center;
+}
+
+/* iframe defines the content width */
+#fbIframe{
+  width:500px;      /* JS will set an exact px width */
+  max-width:100%;
+  height:900px;
+  border:none;
+  display:block;
+}
+
 
 
 /* Subscribe */
@@ -242,11 +259,14 @@ footer{text-align:center;margin-top:18px}
   <h2>Latest on Facebook</h2>
   <div class="divider"></div>
 
+  <div id="fbWrap">
   <div class="poster-frame" id="fbFrame">
     <div class="fb-embed">
       <iframe id="fbIframe" loading="lazy"></iframe>
     </div>
   </div>
+</div>
+
 </section>
 
 <section id="subscribe">
@@ -298,11 +318,17 @@ footer{text-align:center;margin-top:18px}
 <script>
 (function(){
   const iframe = document.getElementById("fbIframe");
-  const frame = document.getElementById("fbFrame");
+  const wrap = document.getElementById("fbWrap");     // measure available space here
   const pageUrl = "https://www.facebook.com/estatesalesbyike";
 
   function setSrc(){
-    const w = Math.max(280, Math.min(500, frame.clientWidth - 44));
+    const available = wrap.getBoundingClientRect().width;
+    const w = Math.max(280, Math.min(500, Math.floor(available - 44)));
+
+    // Make the iframe an actual fixed width so the frame shrink-wraps it
+    iframe.style.width = w + "px";
+    iframe.style.height = "900px";
+
     iframe.src =
       "https://www.facebook.com/plugins/page.php" +
       "?href=" + encodeURIComponent(pageUrl) +
@@ -320,6 +346,7 @@ footer{text-align:center;margin-top:18px}
   });
 })();
 </script>
+
 
 <script>
 (function(){
