@@ -241,6 +241,11 @@ footer{text-align:center;margin-top:18px}
 }
 .contactText .label{font-size:12px;text-transform:uppercase;opacity:.78}
 .contactText .value{font-size:20px;font-weight:600}
+::placeholder{
+  color: rgba(21,17,13,.45);
+  font-style: italic;
+}
+
 </style>
 </head>
 
@@ -277,10 +282,33 @@ footer{text-align:center;margin-top:18px}
     <input type="hidden" name="accessKey" value="sf_7lm8c7hh0bdeef14mea3lc8h">
     <input type="hidden" name="redirectTo" value="https://joshawikkit13.github.io/Estate-Sales-by-Ike/thanks.html">
 
-    <div class="row2">
-      <div><label>Email</label><input id="email" name="email"></div>
-      <div><label>Phone</label><input id="phone" name="phone"></div>
-    </div>
+   <div class="row2">
+  <div>
+    <label for="email">Email</label>
+    <input
+      id="email"
+      name="email"
+      type="email"
+      placeholder="you@example.com">
+  </div>
+
+  <div>
+    <label for="phone">Phone</label>
+    <input
+      id="phone"
+      name="phone"
+      type="tel"
+      placeholder="(XXX) XXX-XXXX">
+  </div>
+</div>
+
+<label for="name">Name</label>
+<input
+  id="name"
+  name="name"
+  type="text"
+  placeholder="Your name (optional)">
+
 
     <label>Name</label><input name="name">
     <p id="formError" style="display:none;color:#7a2e2e;font-weight:600">
