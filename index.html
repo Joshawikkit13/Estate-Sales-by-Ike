@@ -282,7 +282,20 @@ footer{text-align:center;margin-top:18px}
   margin-top:3px;
   accent-color: var(--teal);
 }
+.logo {
+  display: block;
+  margin: 10px auto;   /* Centers the image and adds spacing */
+  max-width: 200px;    /* Adjust this width to fit your design */
+  height: auto;
+  position: relative;
+  z-index: 1;          /* Keeps it under the header::before decoration */
+}
 
+/* Ensure the header text stays on top of the logo if they overlap */
+h1, .kicker, .tagline {
+  position: relative;
+  z-index: 2;
+}
 
 </style>
 </head>
@@ -292,6 +305,7 @@ footer{text-align:center;margin-top:18px}
 
 <header>
   <div class="kicker">Estates • Vintage Finds • Local Sales</div>
+  <img src="StewartandEarl.png" alt="Estate Sales by Ike Logo" class="logo">
   <h1>Estate Sales by Ike</h1>
   <p class="tagline">Full photo galleries and sale details are posted on Facebook. Subscribe for reminders so you never miss a sale.</p>
 </header>
