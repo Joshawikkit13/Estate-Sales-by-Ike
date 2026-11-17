@@ -1,505 +1,277 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Estate Sales by Ike</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estate Sales by Ike</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Newsreader:opsz,wght@6..72,300;6..72,500&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --paper:#fbf2da; --ink:#15110d; --gold:#d6b25e; --teal:#0f6a74; --plum:#4b235a;
+      --border:rgba(21,17,13,.22); --shadow:rgba(0,0,0,.22);
+      --inputBorder:rgba(31,27,22,.42); --inputBg:rgba(255,255,255,.86);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:"Newsreader",serif; color:var(--ink);
+      background:
+        radial-gradient(1200px 800px at 15% 10%, rgba(214,178,94,.22), transparent 60%),
+        radial-gradient(900px 700px at 85% 15%, rgba(15,106,116,.20), transparent 62%),
+        radial-gradient(900px 700px at 60% 90%, rgba(75,35,90,.18), transparent 60%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,.012), rgba(0,0,0,.012) 1px, transparent 1px, transparent 7px),
+        var(--paper);
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:1400px; margin:auto; padding:28px 18px 60px}
+    header, section, footer{
+      background:rgba(255,255,255,.42); border:2px solid var(--border);
+      border-radius:18px; box-shadow:0 14px 38px rgba(0,0,0,.18);
+      padding:22px; position:relative;
+    }
+    header::before, section::before, footer::before{
+      content:""; position:absolute; inset:10px; border:1px solid rgba(21,17,13,.18);
+      border-radius:14px; pointer-events:none;
+    }
+    header{text-align:center}
+    .kicker{font-family:"Special Elite",serif; font-size:12px; letter-spacing:.12em; text-transform:uppercase; opacity:.85}
+    h1{
+      font-family:"Cinzel",serif; font-size:clamp(36px,4vw,52px); margin:6px 0;
+      background:linear-gradient(90deg,var(--plum),var(--teal),var(--gold));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .tagline{font-size:18px; max-width:72ch; margin:0 auto}
+    main{margin-top:20px; display:grid; grid-template-columns:1fr; gap:18px}
+    h2{
+      font-family:"Cinzel",serif; font-size:22px; text-align:center;
+      letter-spacing:.06em; color:var(--teal); margin:0 0 8px;
+    }
+    /* Clean Deco divider */
+    .divider{position:relative; height:10px; margin:14px 0}
+    .divider::before{
+      content:""; position:absolute; left:0; right:0; top:50%; transform:translateY(-50%);
+      height:6px; background:linear-gradient(to bottom, rgba(21,17,13,.35) 0 1px, transparent 1px 4px, rgba(21,17,13,.35) 4px 5px, transparent 5px 6px);
+    }
+    .divider::after{
+      content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+      width:58px; height:10px; border-radius:999px;
+      background:radial-gradient(circle at 50% 50%, rgba(214,178,94,.95) 0 2px, transparent 3px);
+      box-shadow:inset 0 0 0 1px rgba(21,17,13,.25);
+    }
+    /* Poster frame */
+    .poster-frame{
+      position:relative; padding:18px; border-radius:12px;
+      background:
+        radial-gradient(circle at 16px 16px,#f7e7a8 0 4px,#d2ad4b 5px 7px,#8b6a23 8px 10px,transparent 11px),
+        radial-gradient(circle at calc(100% - 16px) 16px,#f7e7a8 0 4px,#d2ad4b 5px 7px,#8b6a23 8px 10px,transparent 11px),
+        radial-gradient(circle at 16px calc(100% - 16px),#f7e7a8 0 4px,#d2ad4b 5px 7px,#8b6a23 8px 10px,transparent 11px),
+        radial-gradient(circle at calc(100% - 16px) calc(100% - 16px),#f7e7a8 0 4px,#d2ad4b 5px 7px,#8b6a23 8px 10px,transparent 11px),
+        rgba(255,255,255,.1);
+      border:2px solid rgba(31,27,22,.3); box-shadow:18px 18px 0 rgba(75,35,90,.25),0 28px 52px rgba(0,0,0,.28);
+    }
+    .poster-frame::before{
+      content:""; position:absolute; inset:10px; background:rgba(255,255,255,.88);
+      border-radius:10px; box-shadow:inset 0 0 0 2px rgba(31,27,22,.75);
+    }
+    .poster-frame::after{content:""; position:absolute; inset:18px; border:1px dashed rgba(31,27,22,.4); border-radius:8px}
+    .poster-frame>*{position:relative; z-index:2}
+    
+    #fbWrap{display:flex; justify-content:center}
+    #fbFrame{display:inline-block; width:auto; max-width:100%}
+    .fb-embed{display:inline-flex; width:auto; justify-content:center}
+    #fbIframe{width:500px; max-width:100%; height:900px; border:none; display:block}
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Newsreader:opsz,wght@6..72,300;6..72,500&family=Special+Elite&display=swap" rel="stylesheet">
-
-<style>
-:root{
-  --paper:#fbf2da;
-  --ink:#15110d;
-  --gold:#d6b25e;
-  --teal:#0f6a74;
-  --plum:#4b235a;
-  --border:rgba(21,17,13,.22);
-  --shadow:rgba(0,0,0,.22);
-  --inputBorder:rgba(31,27,22,.42);
-  --inputBg:rgba(255,255,255,.86);
-}
-
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:"Newsreader",serif;
-  color:var(--ink);
-  background:
-    radial-gradient(1200px 800px at 15% 10%, rgba(214,178,94,.22), transparent 60%),
-    radial-gradient(900px 700px at 85% 15%, rgba(15,106,116,.20), transparent 62%),
-    radial-gradient(900px 700px at 60% 90%, rgba(75,35,90,.18), transparent 60%),
-    repeating-linear-gradient(0deg, rgba(0,0,0,.012), rgba(0,0,0,.012) 1px, transparent 1px, transparent 7px),
-    var(--paper);
-}
-
-a{color:inherit;text-decoration:none}
-
-.wrap{max-width:1400px;margin:auto;padding:28px 18px 60px}
-
-header, section, footer{
-  background:rgba(255,255,255,.42);
-  border:2px solid var(--border);
-  border-radius:18px;
-  box-shadow:0 14px 38px rgba(0,0,0,.18);
-  padding:22px;
-  position:relative;
-}
-
-header::before, section::before, footer::before{
-  content:"";
-  position:absolute;
-  inset:10px;
-  border:1px solid rgba(21,17,13,.18);
-  border-radius:14px;
-  pointer-events:none;
-}
-
-header{text-align:center}
-
-.kicker{
-  font-family:"Special Elite",serif;
-  font-size:12px;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  opacity:.85;
-}
-
-h1{
-  font-family:"Cinzel",serif;
-  font-size:clamp(36px,4vw,52px);
-  margin:6px 0;
-  background:linear-gradient(90deg,var(--plum),var(--teal),var(--gold));
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-
-.tagline{
-  font-size:18px;
-  max-width:72ch;
-  margin:0 auto;
-}
-
-main{
-  margin-top:20px;
-  display:grid;
-  grid-template-columns:1fr;
-  gap:18px;
-}
-
-h2{
-  font-family:"Cinzel",serif;
-  font-size:22px;
-  text-align:center;
-  letter-spacing:.06em;
-  color:var(--teal);
-  margin:0 0 8px;
-}
-
-/* Clean Deco divider */
-.divider{
-  position:relative;
-  height:10px;
-  margin:14px 0;
-}
-.divider::before{
-  content:"";
-  position:absolute;
-  left:0;right:0;top:50%;
-  transform:translateY(-50%);
-  height:6px;
-  background:
-    linear-gradient(to bottom,
-      rgba(21,17,13,.35) 0 1px,
-      transparent 1px 4px,
-      rgba(21,17,13,.35) 4px 5px,
-      transparent 5px 6px
-    );
-}
-.divider::after{
-  content:"";
-  position:absolute;
-  left:50%;top:50%;
-  transform:translate(-50%,-50%);
-  width:58px;height:10px;
-  border-radius:999px;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(214,178,94,.95) 0 2px, transparent 3px);
-  box-shadow:inset 0 0 0 1px rgba(21,17,13,.25);
-}
-
-/* Poster frame */
-.poster-frame{
-  position:relative;
-  padding:18px;
-  border-radius:12px;
-  background:
-    radial-gradient(circle at 16px 16px,#f7e7a8 0 4px,#d2ad4b 5px 7px,#8b6a23 8px 10px,transparent 11px),
-    radial-gradient(circle at calc(100% - 16px) 16px,#f7e7a8 0 4px,#d2ad4b 5px 7px,#8b6a23 8px 10px,transparent 11px),
-    radial-gradient(circle at 16px calc(100% - 16px),#f7e7a8 0 4px,#d2ad4b 5px 7px,#8b6a23 8px 10px,transparent 11px),
-    radial-gradient(circle at calc(100% - 16px) calc(100% - 16px),#f7e7a8 0 4px,#d2ad4b 5px 7px,#8b6a23 8px 10px,transparent 11px),
-    rgba(255,255,255,.1);
-  border:2px solid rgba(31,27,22,.3);
-  box-shadow:18px 18px 0 rgba(75,35,90,.25),0 28px 52px rgba(0,0,0,.28);
-}
-
-.poster-frame::before{
-  content:"";
-  position:absolute;
-  inset:10px;
-  background:rgba(255,255,255,.88);
-  border-radius:10px;
-  box-shadow:inset 0 0 0 2px rgba(31,27,22,.75);
-}
-
-.poster-frame::after{
-  content:"";
-  position:absolute;
-  inset:18px;
-  border:1px dashed rgba(31,27,22,.4);
-  border-radius:8px;
-}
-
-.poster-frame>*{position:relative;z-index:2}
-
-/* ===== Facebook: make frame shrink to feed width ===== */
-#fbWrap{
-  display:flex;
-  justify-content:center;
-}
-
-/* This is the key: the frame can shrink because it's inline-block */
-#fbFrame{
-  display:inline-block;
-  width:auto;
-  max-width:100%;
-}
-
-/* IMPORTANT: remove width:100% so it doesn't force full width */
-.fb-embed{
-  display:inline-flex;
-  width:auto;
-  justify-content:center;
-}
-
-/* iframe defines the content width */
-#fbIframe{
-  width:500px;      /* JS will set an exact px width */
-  max-width:100%;
-  height:900px;
-  border:none;
-  display:block;
-}
-
-
-
-/* Subscribe */
-#subscribe{
-  width:min(66vw,900px);
-  margin:0 auto;
-  border-top:4px solid rgba(214,178,94,.55);
-}
-
-form{display:grid;gap:10px;margin-top:10px}
-.row2{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-/* ✅ prevent overflow in grid at “in-between” widths */
-.row2 > div{ min-width:0; }
-.row2 input{ width:100%; min-width:0; }
-
-@media(max-width:520px){.row2{grid-template-columns:1fr}}
-
-label{font-size:13px;opacity:.85}
-input,button{
-  font:inherit;
-  padding:12px;
-  border-radius:12px;
-  border:2px solid var(--inputBorder);
-  background:var(--inputBg);
-}
-button{
-  font-weight:800;
-  cursor:pointer;
-  background:linear-gradient(180deg,rgba(75,35,90,.28),rgba(214,178,94,.45));
-  border-color:rgba(75,35,90,.65);
-}
-
-/* Contact */
-footer{text-align:center;margin-top:18px}
-.contactCards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-@media(max-width:720px){.contactCards{grid-template-columns:1fr}}
-
-.contactCard{
-  display:flex;align-items:center;gap:12px;
-  padding:14px 16px;border-radius:14px;
-  border:2px solid rgba(75,35,90,.35);
-  background:rgba(255,255,255,.6);
-}
-.icon{
-  width:40px;height:40px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,rgba(214,178,94,.45),rgba(15,106,116,.35));
-}
-.contactText .label{font-size:12px;text-transform:uppercase;opacity:.78}
-.contactText .value{font-size:20px;font-weight:600}
-::placeholder{
-  color: rgba(21,17,13,.45);
-  font-style: italic;
-}
-  .contactText{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  justify-content:flex-start;
-  line-height:1.2;
-}
-.optin{
-  margin-top:6px;
-  padding:10px 12px;
-  border-radius:12px;
-  border:2px solid rgba(31,27,22,.22);
-  background:rgba(255,255,255,.55);
-}
-
-.optinLabel{
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-  font-size:13px;
-  line-height:1.3;
-  cursor:pointer;
-}
-
-.optinLabel input{
-  margin-top:3px;
-  accent-color: var(--teal);
-}
-.logo {
-  display: block;
-  margin: 10px auto;   /* Centers the image and adds spacing */
-  max-width: 200px;    /* Adjust this width to fit your design */
-  height: auto;
-  position: relative;
-  z-index: 1;          /* Keeps it under the header::before decoration */
-}
-
-/* Ensure the header text stays on top of the logo if they overlap */
-h1, .kicker, .tagline {
-  position: relative;
-  z-index: 2;
-}
-
-</style>
+    #subscribe{width:min(66vw,900px); margin:0 auto; border-top:4px solid rgba(214,178,94,.55)}
+    form{display:grid; gap:10px; margin-top:10px}
+    .row2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .row2 > div{min-width:0}
+    .row2 input{width:100%; min-width:0}
+    @media(max-width:520px){.row2{grid-template-columns:1fr}}
+    label{font-size:13px; opacity:.85}
+    input,button{font:inherit; padding:12px; border-radius:12px; border:2px solid var(--inputBorder); background:var(--inputBg)}
+    button{
+      font-weight:800; cursor:pointer;
+      background:linear-gradient(180deg,rgba(75,35,90,.28),rgba(214,178,94,.45));
+      border-color:rgba(75,35,90,.65);
+    }
+    footer{text-align:center; margin-top:18px}
+    .contactCards{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px}
+    @media(max-width:720px){.contactCards{grid-template-columns:1fr}}
+    .contactCard{
+      display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:14px;
+      border:2px solid rgba(75,35,90,.35); background:rgba(255,255,255,.6);
+    }
+    .icon{
+      width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(135deg,rgba(214,178,94,.45),rgba(15,106,116,.35));
+    }
+    .contactText .label{font-size:12px; text-transform:uppercase; opacity:.78}
+    .contactText .value{font-size:20px; font-weight:600}
+    ::placeholder{color:rgba(21,17,13,.45); font-style:italic}
+    .contactText{display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start; line-height:1.2}
+    
+    .optin{
+      margin-top:6px; padding:10px 12px; border-radius:12px;
+      border:2px solid rgba(31,27,22,.22); background:rgba(255,255,255,.55);
+    }
+    .optinLabel{display:flex; gap:10px; align-items:flex-start; font-size:13px; line-height:1.3; cursor:pointer}
+    .optinLabel input{margin-top:3px; accent-color:var(--teal)}
+    .logo{display:block; margin:10px auto; max-width:200px; height:auto; position:relative; z-index:1}
+    h1, .kicker, .tagline{position:relative; z-index:2}
+  </style>
 </head>
-
 <body>
-<div class="wrap">
+  <div class="wrap">
+    <header>
+      <div class="kicker">Estates • Vintage Finds • Local Sales</div>
+      <img src="StewartandEarl.png" alt="Estate Sales by Ike Logo" class="logo">
+      <h1>Estate Sales by Ike</h1>
+      <p class="tagline">Full photo galleries and sale details are posted on Facebook. Subscribe for reminders so you never miss a sale.</p>
+    </header>
 
-<header>
-  <div class="kicker">Estates • Vintage Finds • Local Sales</div>
-  <img src="StewartandEarl.png" alt="Estate Sales by Ike Logo" class="logo">
-  <h1>Estate Sales by Ike</h1>
-  <p class="tagline">Full photo galleries and sale details are posted on Facebook. Subscribe for reminders so you never miss a sale.</p>
-</header>
+    <main>
+      <section>
+        <h2>Latest on Facebook</h2>
+        <div class="divider"></div>
+        <div id="fbWrap">
+          <div class="poster-frame" id="fbFrame">
+            <div class="fb-embed">
+              <iframe id="fbIframe" loading="lazy"></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<main>
+      <section id="subscribe">
+        <h2>Subscribe for Sale Alerts</h2>
+        <div class="divider"></div>
+        <form action="https://api.staticforms.xyz/submit" method="POST">
+          <input type="hidden" name="accessKey" value="sf_7lm8c7hh0bdeef14mea3lc8h">
+          <input type="hidden" name="redirectTo" value="https://joshawikkit13.github.io/Estate-Sales-by-Ike/thanks.html">
+          <div class="row2">
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com">
+            </div>
+            <div>
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" placeholder="(XXX) XXX-XXXX">
+            </div>
+          </div>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name (optional)">
+          
+          <!-- SMS Opt-In (Revealed when phone number is entered) -->
+          <div class="optin" id="optinWrap" style="display:none;">
+            <strong style="display:block; margin-bottom:8px; color:var(--teal);">Estate Sales by Ike Alerts</strong>
+            <label class="optinLabel" for="smsOptIn">
+              <input type="checkbox" id="smsOptIn" name="smsOptIn" value="I agree to receive promotional text messages">
+              <span>
+                By providing your number, you agree to receive promotional SMS text alerts from Estate Sales by Ike. Message frequency varies. Msg & data rates may apply. Reply <strong>STOP</strong> to unsubscribe, <strong>HELP</strong> for help. View our <a href="policies.html#privacy" target="_blank" style="text-decoration:underline; color:var(--teal);">Privacy Policy</a> and <a href="policies.html#terms" target="_blank" style="text-decoration:underline; color:var(--teal);">SMS Terms & Conditions</a>.
+              </span>
+            </label>
+          </div>
 
-<section>
-  <h2>Latest on Facebook</h2>
-  <div class="divider"></div>
+          <p id="formError" style="display:none; color:#7a2e2e; font-weight:600">
+            Please enter an email or phone number.
+          </p>
+          <button>Subscribe</button>
+        </form>
+      </section>
+    </main>
 
-  <div id="fbWrap">
-  <div class="poster-frame" id="fbFrame">
-    <div class="fb-embed">
-      <iframe id="fbIframe" loading="lazy"></iframe>
-    </div>
-  </div>
-</div>
-
-</section>
-
-<section id="subscribe">
-  <h2>Subscribe for Sale Alerts</h2>
-  <div class="divider"></div>
-
-  <form action="https://api.staticforms.xyz/submit" method="POST">
-    <input type="hidden" name="accessKey" value="sf_7lm8c7hh0bdeef14mea3lc8h">
-    <input type="hidden" name="redirectTo" value="https://joshawikkit13.github.io/Estate-Sales-by-Ike/thanks.html">
-
-   <div class="row2">
-  <div>
-    <label for="email">Email</label>
-    <input
-      id="email"
-      name="email"
-      type="email"
-      placeholder="you@example.com">
-  </div>
-
-  <div>
-    <label for="phone">Phone</label>
-    <input
-      id="phone"
-      name="phone"
-      type="tel"
-      placeholder="(XXX) XXX-XXXX">
-  </div>
-</div>
-
-<label for="name">Name</label>
-<input
-  id="name"
-  name="name"
-  type="text"
-  placeholder="Your name (optional)">
-
-    <!-- SMS Opt-In (only required if phone is provided) -->
-<div class="optin" id="optinWrap" style="display:none;">
-  <strong style="display:block; margin-bottom:8px; color:var(--teal);">Estate Sales by Ike Alerts</strong>
-  <label class="optinLabel" for="smsOptIn">
-  <label class="optinLabel" for="smsOptIn">
-    <input
-      type="checkbox"
-      id="smsOptIn"
-      name="smsOptIn"
-      value="I agree to receive promotional text messages"
-    >
-    <span>
-      By providing your number, you agree to receive promotional text messages. Message frequency may vary.
-      Msg &amp; data rates may apply. Reply STOP to unsubscribe, HELP for help.
-    </span>
-  </label>
-</div>
-
-
-    <p id="formError" style="display:none;color:#7a2e2e;font-weight:600">
-      Please enter an email or phone number.
-    </p>
-    <button>Subscribe</button>
-  </form>
-</section>
-
-</main>
-
-<footer>
-  <h2>Contact</h2>
-  <div class="divider"></div>
-  <div class="contactCards">
-    <a class="contactCard" href="mailto:estatesalesbyike@gmail.com">
-      <div class="icon">✉️</div>
-      <div class="contactText">
-        <div class="label">Email</div>
-        <div class="value">estatesalesbyike@gmail.com</div>
+    <footer>
+      <h2>Contact</h2>
+      <div class="divider"></div>
+      <div class="contactCards">
+        <a class="contactCard" href="mailto:estatesalesbyike@gmail.com">
+          <div class="icon">✉️</div>
+          <div class="contactText">
+            <div class="label">Email</div>
+            <div class="value">estatesalesbyike@gmail.com</div>
+          </div>
+        </a>
+        <a class="contactCard" href="tel:+19183194853">
+          <div class="icon">📞</div>
+          <div class="contactText">
+            <div class="label">Phone</div>
+            <div class="value">(918) 319-4853</div>
+          </div>
+        </a>
       </div>
-    </a>
-    <a class="contactCard" href="tel:+19183194853">
-      <div class="icon">📞</div>
-      <div class="contactText">
-        <div class="label">Phone</div>
-        <div class="value">(918) 319-4853</div>
+      <div style="margin-top:16px; font-size:14px; opacity:.85;">
+        <a href="policies.html#privacy" style="text-decoration:underline; color:var(--teal);">Privacy Policy</a> • 
+        <a href="policies.html#terms" style="text-decoration:underline; color:var(--teal);">SMS Terms & Conditions</a>
       </div>
-    </a>
+    </footer>
   </div>
-</footer>
 
-</div>
+  <script>
+    (function(){
+      const iframe = document.getElementById("fbIframe");
+      const wrap = document.getElementById("fbWrap");
+      const pageUrl = "https://www.facebook.com/estatesalesbyike";
+      function setSrc(){
+        const available = wrap.getBoundingClientRect().width;
+        const w = Math.max(280, Math.min(500, Math.floor(available - 44)));
+        iframe.style.width = w + "px";
+        iframe.style.height = "900px";
+        iframe.src = "https://www.facebook.com/plugins/page.php" + "?href=" + encodeURIComponent(pageUrl) + "&tabs=timeline" + "&width=" + w + "&height=900" + "&small_header=false" + "&adapt_container_width=false";
+      }
+      window.addEventListener("load", setSrc);
+      window.addEventListener("resize", () => {
+        clearTimeout(window.__fbTimer);
+        window.__fbTimer = setTimeout(setSrc, 250);
+      });
+    })();
+  </script>
+  <script>
+    (function(){
+      const email = document.getElementById("email");
+      const phone = document.getElementById("phone");
+      const optInWrap = document.getElementById("optinWrap");
+      const smsOptIn = document.getElementById("smsOptIn");
+      const err = document.getElementById("formError");
+      const form = document.querySelector("form");
 
-<script>
-(function(){
-  const iframe = document.getElementById("fbIframe");
-  const wrap = document.getElementById("fbWrap");     // measure available space here
-  const pageUrl = "https://www.facebook.com/estatesalesbyike";
+      function normalizePhone(val){
+        return (val || "").replace(/\D/g, "");
+      }
 
-  function setSrc(){
-    const available = wrap.getBoundingClientRect().width;
-    const w = Math.max(280, Math.min(500, Math.floor(available - 44)));
+      function updateOptInRequirement(){
+        const hasPhone = normalizePhone(phone.value).length > 0;
+        optInWrap.style.display = hasPhone ? "block" : "none";
+        smsOptIn.required = hasPhone;
+        if(!hasPhone){
+          smsOptIn.checked = false;
+          err.style.display = "none";
+        }
+      }
 
-    // Make the iframe an actual fixed width so the frame shrink-wraps it
-    iframe.style.width = w + "px";
-    iframe.style.height = "900px";
+      phone.addEventListener("input", updateOptInRequirement);
+      window.addEventListener("load", updateOptInRequirement);
 
-    iframe.src =
-      "https://www.facebook.com/plugins/page.php" +
-      "?href=" + encodeURIComponent(pageUrl) +
-      "&tabs=timeline" +
-      "&width=" + w +
-      "&height=900" +
-      "&small_header=false" +
-      "&adapt_container_width=false";
-  }
+      form.addEventListener("submit", e => {
+        err.style.display = "none";
+        const hasEmail = !!email.value.trim();
+        const hasPhone = normalizePhone(phone.value).length > 0;
 
-  window.addEventListener("load", setSrc);
-  window.addEventListener("resize", () => {
-    clearTimeout(window.__fbTimer);
-    window.__fbTimer = setTimeout(setSrc, 250);
-  });
-})();
-</script>
+        if(!hasEmail && !hasPhone){
+          e.preventDefault();
+          err.textContent = "Please enter an email or phone number.";
+          err.style.display = "block";
+          return;
+        }
 
-
-<script>
-(function(){
-  const email = document.getElementById("email");
-  const phone = document.getElementById("phone");
-  const optInWrap = document.getElementById("optinWrap");
-  const smsOptIn = document.getElementById("smsOptIn");
-  const err = document.getElementById("formError");
-  const form = document.querySelector("form");
-
-  function normalizePhone(val){
-    return (val || "").replace(/\D/g, ""); // digits only
-  }
-
-  function updateOptInRequirement(){
-    const hasPhone = normalizePhone(phone.value).length > 0;
-
-    // Show checkbox only if they entered a phone number
-    optInWrap.style.display = hasPhone ? "block" : "none";
-
-    // Only require opt-in if phone is provided
-    smsOptIn.required = hasPhone;
-
-    // If they remove the phone number, clear the checkbox + any error
-    if(!hasPhone){
-      smsOptIn.checked = false;
-      err.style.display = "none";
-    }
-  }
-
-  phone.addEventListener("input", updateOptInRequirement);
-  window.addEventListener("load", updateOptInRequirement);
-
-  form.addEventListener("submit", e => {
-    err.style.display = "none";
-
-    const hasEmail = !!email.value.trim();
-    const hasPhone = normalizePhone(phone.value).length > 0;
-
-    if(!hasEmail && !hasPhone){
-      e.preventDefault();
-      err.textContent = "Please enter an email or phone number.";
-      err.style.display = "block";
-      return;
-    }
-
-    if(hasPhone && !smsOptIn.checked){
-      e.preventDefault();
-      err.textContent = "Please check the box to agree to receive text messages.";
-      err.style.display = "block";
-      return;
-    }
-  });
-})();
-</script>
-
-
+        if(hasPhone && !smsOptIn.checked){
+          e.preventDefault();
+          err.textContent = "Please check the box to agree to receive text messages.";
+          err.style.display = "block";
+          return;
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
